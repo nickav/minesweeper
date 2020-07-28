@@ -8,6 +8,7 @@
 .Board {
   border: 1px solid #aaa;
   box-shadow: 0 0px 18px rgba(0, 0, 0, 0.5);
+  user-select: none;
 }
 
 .row {
@@ -16,6 +17,8 @@
 
 .footer {
   text-align: center;
+  @include child-space-horz(16px);
+  margin-top: 16px;
 }
 
 .cell {

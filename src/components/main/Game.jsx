@@ -5,8 +5,6 @@ import classNames from 'classnames';
 // -----------------------------------------------------------------------------
 // Style -----------------------------------------------------------------------
 import styles from './Game.scss';
-//------------------------------------------------------------------------------
-// Components ------------------------------------------------------------------
 // -----------------------------------------------------------------------------
 // Helpers ---------------------------------------------------------------------
 import {
@@ -16,6 +14,7 @@ import {
   updateGame,
   toggleGameFlag,
 } from '@/helpers/functions';
+import env from '@/helpers/env';
 //------------------------------------------------------------------------------
 // React Class -----------------------------------------------------------------
 class Game extends React.Component {
@@ -55,14 +54,17 @@ class Game extends React.Component {
     </div>
   );
 
-  constructor(props) {
-    super(props);
+  state = {
+    game: null,
+    difficulty: 'easy',
+  };
 
-    const { size } = props;
-    const bombCount = Math.floor(size.width * size.height * 0.2);
-    this.state = { game: makeNewGame(size, bombCount) };
+  componentDidMount() {
+    this.resetGame();
 
-    window.game = this.state.game;
+    if (env.NODE_ENV === 'development') {
+      window.game = this.state.game;
+    }
   }
 
   handleMove = (event, pos) => {
@@ -76,9 +78,40 @@ class Game extends React.Component {
     event.preventDefault();
   };
 
+  resetGame = (event) => {
+    const { difficulty } = this.state;
+
+    const gridSizeForDifficulty = {
+      easy: 12,
+      medium: 16,
+      hard: 24,
+    };
+
+    const percentForDifficulty = {
+      easy: 0.1,
+      medium: 0.2,
+      hard: 0.3,
+    };
+
+    const dim = gridSizeForDifficulty[difficulty];
+    const percent = percentForDifficulty[difficulty];
+
+    const size = { width: dim, height: dim };
+
+    const bombCount = Math.floor(size.width * size.height * percent);
+    const game = makeNewGame(size, bombCount);
+
+    this.setState({ game });
+  };
+
+  changeDifficulty = (event) => {
+    const difficulty = event.target.value;
+    this.setState({ difficulty }, this.resetGame);
+  };
+
   render() {
     const { className } = this.props;
-    const { grid, lastPos, state, moves } = this.state.game;
+    const { grid, lastPos, state, moves } = this.state.game || {};
 
     const didWin = state === GameState.WIN;
     const gameIsOver = didWin || state === GameState.GAME_OVER;
@@ -92,13 +125,25 @@ class Game extends React.Component {
             {<h3>{didWin ? 'You Win!' : 'You Lose!'}</h3>}
           </div>
         )}
-        <Game.Board
-          grid={grid}
-          highlight={lastPos}
-          onMakeMove={this.handleMove}
-          onFlag={this.handleFlag}
-        />
-        <div className={styles.footer}>Moves: {moves}</div>
+
+        {grid && (
+          <Game.Board
+            grid={grid}
+            highlight={lastPos}
+            onMakeMove={this.handleMove}
+            onFlag={this.handleFlag}
+          />
+        )}
+
+        <div className={styles.footer}>
+          <select name="difficulty" onChange={this.changeDifficulty}>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+          <span>Moves: {moves}</span>
+          <a onClick={this.resetGame}>Reset</a>
+        </div>
       </div>
     );
   }

@@ -32,7 +32,6 @@ const ENV_VARS = {
   DATE: new Date(),
   TITLE: HTML_VARS.title,
   API_URL: '/api',
-  GOOGLE_MAPS_API_KEY: 'AIzaSyDzir-UR9bIut0_v4tT1VvZDZ_kBSHmlkM',
 };
 
 // Babel
