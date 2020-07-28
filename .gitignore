@@ -1,0 +1,13 @@
+# Dependencies
+node_modules
+
+# Production
+bin
+!bin/.gitkeep
+dist
+
+# Misc
+.DS_Store
+.env
+yarn-debug.log*
+yarn-error.log*

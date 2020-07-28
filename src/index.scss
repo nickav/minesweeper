@@ -1,0 +1,41 @@
+@import 'style/lib/reset.min.scss';
+
+@import 'colors';
+@import 'fonts';
+
+html,
+body {
+  color: $black;
+  font-family: $base-font;
+  font-size: 16px;
+  line-height: 1.5;
+  position: relative;
+  overflow-x: hidden;
+  height: 100%;
+  -moz-osx-font-smoothing: grayscale;
+
+  & > * {
+    height: 100%;
+  }
+}
+
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+
+  &:hover {
+    color: rgba(0, 0, 0, 0.8);
+    transition: 50ms linear color;
+  }
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
