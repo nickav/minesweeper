@@ -7,6 +7,7 @@ import React from 'react';
 import styles from './App.scss';
 // ------------------------------------------------------------------------------
 // Components -------------------------------------------------------------------
+import { Header, Footer, Game } from '@/components/main';
 //------------------------------------------------------------------------------
 // React Class -----------------------------------------------------------------
 class App extends React.Component {
@@ -22,7 +23,9 @@ class App extends React.Component {
 
     return (
       <div className={cn}>
-        <h1>Hello, sailor!</h1>
+        <Header />
+        <Game size={{ width: 16, height: 16 }} />
+        <Footer />
       </div>
     );
   }

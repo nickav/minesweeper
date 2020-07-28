@@ -1,6 +1,12 @@
 // File: App.scss
+@import 'mixins';
 
 .App {
   min-width: 320px;
   height: 100%;
+
+  @include child-space-vert(32px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

@@ -1,0 +1,49 @@
+// File: Game
+@import 'mixins';
+
+.Game {
+  position: relative;
+}
+
+.Board {
+  border: 1px solid #aaa;
+  box-shadow: 0 0px 18px rgba(0, 0, 0, 0.5);
+}
+
+.row {
+  display: flex;
+}
+
+.footer {
+  text-align: center;
+}
+
+.cell {
+  @include size(24px);
+
+  border: 1px solid #aaa;
+  text-align: center;
+  font-weight: bold;
+
+  color: red;
+
+  &.highlight {
+    background: yellow;
+  }
+
+  &.hidden {
+    background: #444;
+  }
+
+  &.count--1 {
+    color: blue;
+  }
+
+  &.count--2 {
+    color: green;
+  }
+
+  &.count--3 {
+    color: red;
+  }
+}
